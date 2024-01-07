@@ -7,7 +7,8 @@ struct MyUserInfo: Sendable {
     var name: String
 }
 
-// Not recomanded to do this:
+// Not recomanded to do this: //
+
 final class MyClassUserInfo: @unchecked Sendable {
     private var name: String
     let queue = DispatchQueue(label: "com.MyApp.MyClassUserInfo")
