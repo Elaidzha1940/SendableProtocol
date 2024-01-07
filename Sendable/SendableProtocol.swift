@@ -5,19 +5,35 @@
 //  Created by: Elaidzha Shchukin
 //  Date: 07.01.2024
 //
-//  */ 
+//  */
 
 import SwiftUI
 
 actor CurrentUserManager {
     
-    func updateDatbase(userInfo: MyUserInfo) {
+    func updateDatbase(userInfo: MyClassUserInfo) {
         
     }
 }
 
-struct MyUserInfo {
-    let name: String
+struct MyUserInfo: Sendable {
+    var name: String
+}
+
+// Not recomanded to do this:
+final class MyClassUserInfo: @unchecked Sendable {
+    private var name: String
+    let queue = DispatchQueue(label: "com.MyApp.MyClassUserInfo")
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    func updateName(ame: String) {
+        queue.async {
+            self.name = self.name
+        }
+    } 
 }
 
 class SendablePViewModel: ObservableObject {
@@ -25,7 +41,7 @@ class SendablePViewModel: ObservableObject {
     let manager = CurrentUserManager()
     
     func updtaeCurrentUserInfo() async {
-        let info = MyUserInfo(name: "info")
+        let info = MyClassUserInfo(name: "info")
         
         await manager.updateDatbase(userInfo: info)
     }
@@ -37,7 +53,7 @@ struct SendableProtocol: View {
     var body: some View {
         
         VStack {
-          Text("Hooo")
+            Text("Hooo")
         }
         .task {
             
