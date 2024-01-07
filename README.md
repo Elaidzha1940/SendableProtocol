@@ -1,4 +1,4 @@
-Sendable Protocol.
+Sendable Protocol, @unchecked. 
 =========
 
 `````````ruby
