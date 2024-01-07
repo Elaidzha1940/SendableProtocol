@@ -1,4 +1,4 @@
-Sendable.
+Sendable Protocol.
 =========
 
 `````````ruby
